@@ -5,6 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/Home'
 import DetailScreen from './screens/Details'
 import ColorScreen from './screens/Colors'
+import RedColorScreen from './screens/ColorRed'
+import BlackColorScreen from './screens/ColorBlack'
+import BlueColorScreen from './screens/ColorBlue'
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
@@ -18,6 +21,9 @@ const MyStack = () => {
         />
         <Stack.Screen name="Details" component={DetailScreen} />
         <Stack.Screen name="Colors" component={ColorScreen} />
+        <Stack.Screen name="RedColor" component={RedColorScreen}/>
+        <Stack.Screen name="BlackColor" component={BlackColorScreen}/>
+        <Stack.Screen name="BlueColor" component={BlueColorScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

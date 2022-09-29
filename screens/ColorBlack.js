@@ -3,12 +3,12 @@ import {View, Button,Text,Image,StyleSheet} from 'react-native'
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export const Home = ({navigation}) => {
+export const ColorBlack = ({navigation}) => {
 
   return (
     <View style={styles.container}>
         <View style={styles.header}>
-            <Image style={{}} source={require('../assets/vs_bac1.png')}></Image>
+            <Image style={{}} source={require('../assets/vsmart_black_star1.png')}></Image>
         </View>
         <View style={styles.body}>
          <View>
@@ -31,7 +31,6 @@ export const Home = ({navigation}) => {
          </View>
          <Text style={{color:'red',fontSize:20,}}>Ở đâu rẻ hơn hoàn tiền</Text>
          <View style={styles.footer1}>
-          
           <Button  onPress={()=> navigation.navigate('Colors')} title='4 MÀU CHỌN MÀU     >' ></Button>
           
          </View>
@@ -94,4 +93,4 @@ const styles = StyleSheet.create({
   
    },
 });
-export default Home;
+export default ColorBlack;
