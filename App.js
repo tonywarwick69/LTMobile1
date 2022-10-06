@@ -1,61 +1,72 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, Button, ScrollView } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import Add from './components/Add';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Items from './components/Items';
+import React,{useState} from 'react';
+import {SafeAreaView,View, StyleSheet, Text, TextInput, ScrollView,} from 'react-native';
+import TodoInsert from './components/TodoInsert';
+import TodoList from './components/TodoList';
 
-export default function App() {
 
-  const [initialElements, changeEl]  = useState([
-   
-  ]);
+const App = () => {
+  const [todos, setTodos] = useState([]);
 
-  const [exampleState, setExampleState] = useState(initialElements);
-  const [idx, incr] = useState(0);
+  const addTodo = text => {
+    setTodos([
+      ...todos,
+      {id: Math.random().toString(), textValue: text, checked: false},
+    ]);
+  };
 
-  const addElement = () => {
-    var newArray = [...initialElements , {id : idx, text:  (idx+1) }];
-    //newArray.push(<Items/>)
-    incr(idx + 1);
-    //console.log(initialElements.length);
-    setExampleState(newArray);
-    changeEl(newArray);
-  }
+  const onRemove = id => e => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
 
+  const onToggle = id => e => {
+    setTodos(
+      todos.map(todo =>
+        todo.id === id ? {...todo, checked: !todo.checked} : todo,
+      ),
+    );
+  };
   return (
     <View style={styles.container}>
-        <View style={styles.list}>
-        <FlatList
-            keyExtractor = {item => item.id}  
-            data={exampleState}
-            renderItem = {item => (<Items><Text>{item.item.text}</Text><Button></Button></Items>)} />
-        </View>
-       <View style={styles.bottom}>
-       <Icon.Button
-            name="add-circle"
-            backgroundColor="#3b5998"        
-          title="Add element"
-          onPress={addElement}
-  >Add Item</Icon.Button>
-       </View>
+      <Text style={styles.appTitle}>Hello Todolist</Text>
+      <View style={styles.card}>
+        <TodoInsert onAddTodo={addTodo} />
+        <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle}/>
+
+      </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    width: '100%',
-    borderWidth: 1
+   
+    justifyContent: 'center',
   },
-  list:{
-    paddingTop:50,
-    
+  appTitle: {
+    color: '#fff',
+    fontSize: 36,
+    marginTop: 30,
+    marginBottom: 30,
+    fontWeight: '300',
+    textAlign: 'center',
+    backgroundColor: '#3143e8',
   },
-  bottom:{
-    
-    alignItems:'center',
+  card: {
+    backgroundColor: '#fff',
+    flex: 1,
+    borderTopLeftRadius: 10, // to provide rounded corners
+    borderTopRightRadius: 10, // to provide rounded corners
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  input: {
+    padding: 20,
+    borderBottomColor: '#bbb',
+    borderBottomWidth: 1,
+    fontSize: 24,
+    marginLeft: 20,
   },
 });
+export default App;
