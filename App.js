@@ -1,9 +1,29 @@
+import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ScrollView, ActivityIndicator, FlatList  } from 'react-native';
 
 export default function App() {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+
+  const getName = async () => {
+    try {
+      const response = await fetch('https://6347859cdb76843976acdaff.mockapi.io/api/buoi07/user');
+      const json = await response.json();
+      setData(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    getName();
+  }, []);
   return (
-    <View style={styles.container}>
+    
+    <View style={styles.container}> 
       <View style={styles.header}>
         <View style={styles.searchField}>
           <Image style={styles.imageUser} source={require('./assets/Vector.png')}></Image>
@@ -22,6 +42,22 @@ export default function App() {
         </View>
         
       </View>
+      <View style={styles.contentList}>
+        {isLoading ? <ActivityIndicator /> : (
+          <FlatList
+          numColumns="1"
+            data={data}
+            keyExtractor={(item) => item.id}
+            renderItem={({item}) => (
+              <View style={styles.itemList}key={item.id}>
+                <Text>{item.name}</Text>
+                
+              </View>
+            )}
+          />
+        )}
+      </View>
+     
       
     </View>
   );
@@ -66,4 +102,12 @@ const styles = StyleSheet.create({
     alignItems:'center',
     fontSize:'large',
   },
+  contentList:{
+    flex:1,
+  },
+  itemList:{
+    borderWidth: 1,
+    borderColor: "thistle",
+    borderRadius: 50,
+  }
 });
