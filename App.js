@@ -6,7 +6,7 @@ import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ScrollView,
 export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-
+  //get user name from api to react native
   const getName = async () => {
     try {
       const response = await fetch('https://6347859cdb76843976acdaff.mockapi.io/api/buoi07/user');
@@ -21,19 +21,77 @@ export default function App() {
   useEffect(() => {
     getName();
   }, []);
+  //get text of InputText
+  const [text,setText] = useState('');
+
+  const handleSubmitData = (text) => {
+    console.log('check value: ', text)
+    axios.post('https://6347859cdb76843976acdaff.mockapi.io/api/buoi07/user', {
+        "name": `${text}`,
+        
+    })
+        .then((response) => {
+            console.log('here is what you upload: ', response.data)
+            getName()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+/*
+const getData = () => {
+  axios.get(`https://6347859cdb76843976acdaff.mockapi.io/api/buoi07/user`)
+      .then((getData) => {
+           setData(getData.data);
+       })
+       .catch((err) => {
+        console.log(err)
+    })
+}
+*/
+/*
+const getDataByName = (name) => {
+  axios.get(`https://6347859cdb76843976acdaff.mockapi.io/api/buoi07/user`)
+      .then((getData) => {
+        if(name===getDataByName.data.name){
+          axios.get(`https://6347859cdb76843976acdaff.mockapi.io/api/buoi07/user/${getDataByName.data.id}`)
+          .then((getData)=>{
+            setData(getData.data);
+          })
+        }
+          
+           
+       })
+}
+*/
+//text for delete
+const [text2,setText2] = useState('');
+const onDelete = (id) => {
+    id=text2;
+    axios.delete(`https://6347859cdb76843976acdaff.mockapi.io/api/buoi07/user/${id}`)
+    .then((response) => {
+      console.log('here is what you upload: ', response.data)
+      getName()
+  })
+  .catch((err) => {
+      console.log(err)
+  })
+}
+
   return (
     
     <View style={styles.container}> 
       <View style={styles.header}>
         <View style={styles.searchField}>
           <Image style={styles.imageUser} source={require('./assets/Vector.png')}></Image>
-          <TextInput style={styles.inputText} placeholder="Put name to add"></TextInput> 
+          <TextInput onChangeText={(text) => setText(text)}
+                    value={text} style={styles.inputText} placeholder="Put name to add"></TextInput> 
         </View>
         <View style={styles.buttons}>
-          <TouchableOpacity style={styles.buttonStyle}>
+          <TouchableOpacity  onPress={() => handleSubmitData(text)} style={styles.buttonStyle}>
             <Text>Add</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyle}>
+          <TouchableOpacity onPress={() => onDelete(text2)} style={styles.buttonStyle}>
             <Text>Remove</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonStyle}>
@@ -49,10 +107,10 @@ export default function App() {
             data={data}
             keyExtractor={(item) => item.id}
             renderItem={({item}) => (
-              <View style={styles.itemList}key={item.id}>
-                <Text>{item.name}</Text>
+              <TouchableOpacity style={styles.itemList} key={item.id} value={item.id} name={item.id} onPress={(text2) => setText2(item.id)}>
+                <Text style={{fontSize:25,marginLeft:20,}}>{item.name}</Text>
                 
-              </View>
+              </TouchableOpacity>
             )}
           />
         )}
@@ -100,7 +158,7 @@ const styles = StyleSheet.create({
     width:64,
     height:40,
     alignItems:'center',
-    fontSize:'large',
+    
   },
   contentList:{
     flex:1,
@@ -108,6 +166,7 @@ const styles = StyleSheet.create({
   itemList:{
     borderWidth: 1,
     borderColor: "thistle",
-    borderRadius: 50,
+    borderRadius: 5,
+    backgroundColor:"#46AD7C"
   }
 });
