@@ -2,7 +2,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-
 const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
   return (
     <View style={styles.container}>
@@ -15,13 +14,7 @@ const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
           <View style={styles.circle} />
         )}
       </TouchableOpacity>
-      <Text
-  style={[
-    styles.text,
-    checked ? styles.strikeText : styles.unstrikeText,
-  ]}>
-  {textValue}
-</Text>
+      <Text style={[styles.text,checked ? styles.strikeText : styles.unstrikeText, ]}>{textValue}</Text>
       <TouchableOpacity style={styles.buttonContainer}>
     <Text style={styles.buttonText}  onPress={onRemove(id)}>
       <Icon name="delete" size={30} color="#e33057" />
@@ -30,7 +23,6 @@ const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -62,7 +54,6 @@ const styles = StyleSheet.create({
   },
   strikeText: {
     color: 'black',
-    
   },
   unstrikeText: {
     color: '#29323c',
@@ -72,5 +63,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
-
 export default TodoListItem;

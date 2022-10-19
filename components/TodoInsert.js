@@ -1,27 +1,25 @@
 // components/TodoInsert.js
 import React, {useState} from 'react';
-import {Button, StyleSheet, TextInput, View} from 'react-native';
-
+import {Button, StyleSheet, TextInput, View, Image} from 'react-native';
 const TodoInsert = ({onAddTodo}) => {
     const [newTodoItem, setNewTodoItem] = useState('');
     const todoInputHandler = newTodo => {
         setNewTodoItem(newTodo);
       };
-
       const addTodoHandler = () => {
         onAddTodo(newTodoItem);
         setNewTodoItem('');
       };
   return (
     <View style={styles.inputContainer}>
+      <Image source={require('../assets/Vector.png')} />
     <TextInput
         style={styles.input}
         placeholder="Add an item!"
         placeholderTextColor={'#999'}
         onChangeText={todoInputHandler}
         value={newTodoItem}
-        autoCorrect={false}
-      />
+        autoCorrect={false} />
      <View style={styles.button}>
         <Button title={'ADD'} onPress={addTodoHandler} />
       </View>
@@ -46,5 +44,4 @@ const styles = StyleSheet.create({
       marginRight: 10,
     },
   });
-  
   export default TodoInsert;

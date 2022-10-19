@@ -2,7 +2,6 @@
 import React from 'react';
 import {StyleSheet, ScrollView, Text} from 'react-native';
 import TodoListItem from './TodoListItem';
-
 const TodoList = ({todos, onRemove, onToggle}) => {
   return (
     <ScrollView contentContainerStyle={styles.listContainer}>
@@ -12,11 +11,9 @@ const TodoList = ({todos, onRemove, onToggle}) => {
   </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
   listContainer: {
     alignItems: 'center',
   },
 });
-
 export default TodoList;

@@ -2,22 +2,17 @@ import React,{useState} from 'react';
 import {SafeAreaView,View, StyleSheet, Text, TextInput, ScrollView,} from 'react-native';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
-
-
 const App = () => {
   const [todos, setTodos] = useState([]);
-
   const addTodo = text => {
     setTodos([
       ...todos,
       {id: Math.random().toString(), textValue: text, checked: false},
     ]);
   };
-
   const onRemove = id => e => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
-
   const onToggle = id => e => {
     setTodos(
       todos.map(todo =>
@@ -31,17 +26,14 @@ const App = () => {
       <View style={styles.card}>
         <TodoInsert onAddTodo={addTodo} />
         <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle}/>
-
       </View>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-   
     justifyContent: 'center',
   },
   appTitle: {
